@@ -4,16 +4,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Join The Knights of Iluvatar, a noble LOTRO kinship dedicated to honor, courage, and fellowship in Middle-earth.">
   <title>The Knights of Iluvatar - LOTRO Kinship</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <header>
     <nav>
       <a href="#" class="logo">Knights of Iluvatar</a>
-      <button class="mobile-menu-btn" aria-label="Toggle mobile menu">
+      <button class="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false">
         <i class="fas fa-bars"></i>
       </button>
       <div class="nav-links">
@@ -30,7 +33,7 @@
     <a href="#join" class="cta-button">Join Our Kinship</a>
   </header>
 
-  <main class="container">
+  <main id="main-content" class="container">
     <section id="about">
       <h2>About Us</h2>
       <p>The Knights of Iluvatar are a noble kinship in the world of Lord of the Rings Online. We are dedicated to
@@ -68,19 +71,23 @@
 
     <section id="gallery">
       <h2>Kinship Gallery</h2>
-      <div class="gallery">
-        <img
-          src="https://cdn.discordapp.com/attachments/1287709506729672704/1288383052535300160/ScreenShot_2024-09-24_234645_0.jpg?ex=66f4fbb8&is=66f3aa38&hm=fff3f1880f83308b360bd852c374ee2efebdfefebbbe49d431f62a243d1e2eaf&"
-          alt="Kinship members in Rivendell">
-        <img
-          src="https://cdn.discordapp.com/attachments/1287709506729672704/1288383276859265045/20240925013452_1.png?ex=66f4fbee&is=66f3aa6e&hm=4cbd53f7e6b1547307eee24f36218fcd2309ed95b8d56e01b7251d5a93f48391&"
-          alt="Battle against a fearsome Balrog">
-        <img
-          src="https://cdn.discordapp.com/attachments/1144142853132525640/1288376080490823721/ScreenShot_2024-09-25_004619_0.jpg?ex=66f4f53a&is=66f3a3ba&hm=95c4cbc4d98ad24c5b01086a738e8778fd8e38c67ee35b7862ba4d6cd34d7357&"
-          alt="Exploring the majestic forests of Lothlorien">
-        <img
-          src="https://cdn.discordapp.com/attachments/1144142853132525640/1288381258203926560/Screenshot_2024-09-25_002240.png?ex=66f4fa0c&is=66f3a88c&hm=a2f76e8e734b6464d4b6599c04f184230baeaae764d2ae9975370a8b1e9da11c&"
-          alt="Kinship meeting in the Prancing Pony">
+      <div class="gallery-container">
+        <div class="gallery-carousel">
+          <img
+            src="https://cdn.discordapp.com/attachments/1287709506729672704/1288383052535300160/ScreenShot_2024-09-24_234645_0.jpg?ex=66f4fbb8&is=66f3aa38&hm=fff3f1880f83308b360bd852c374ee2efebdfefebbbe49d431f62a243d1e2eaf&"
+            alt="Kinship members in Rivendell" loading="lazy">
+          <img
+            src="https://cdn.discordapp.com/attachments/1287709506729672704/1288383276859265045/20240925013452_1.png?ex=66f4fbee&is=66f3aa6e&hm=4cbd53f7e6b1547307eee24f36218fcd2309ed95b8d56e01b7251d5a93f48391&"
+            alt="Battle against a fearsome Balrog" loading="lazy">
+          <img
+            src="https://cdn.discordapp.com/attachments/1144142853132525640/1288376080490823721/ScreenShot_2024-09-25_004619_0.jpg?ex=66f4f53a&is=66f3a3ba&hm=95c4cbc4d98ad24c5b01086a738e8778fd8e38c67ee35b7862ba4d6cd34d7357&"
+            alt="Exploring the majestic forests of Lothlorien" loading="lazy">
+          <img
+            src="https://cdn.discordapp.com/attachments/1144142853132525640/1288381258203926560/Screenshot_2024-09-25_002240.png?ex=66f4fa0c&is=66f3a88c&hm=a2f76e8e734b6464d4b6599c04f184230baeaae764d2ae9975370a8b1e9da11c&"
+            alt="Kinship meeting in the Prancing Pony" loading="lazy">
+        </div>
+        <button class="gallery-prev" aria-label="Previous image">&lt;</button>
+        <button class="gallery-next" aria-label="Next image">&gt;</button>
       </div>
     </section>
 
@@ -90,21 +97,23 @@
         <div class="testimonial">
           <img
             src="https://cdn.discordapp.com/attachments/1144142853132525640/1288424623620227072/5rSEEkz.png?ex=66f52270&is=66f3d0f0&hm=fd5cb967f417d55b532319d8533b5d14a11f1439a89740c0695cc19d59c8d496&"
-            alt="Zendevve, Founder">
+            alt="Zendevve, Founder" loading="lazy">
           <h3>Zendevve</h3>
           <p>Founder</p>
-          <p>"The Knights of Iluvatar have become like a strong unit. The support and camaraderie I've found here are
-            unmatched in Middle-earth."</p>
+          <p>"I cherish our community's camaraderie, fostering teamwork and friendship through raids and chats, giving
+            me a strong sense of belonging."</p>
         </div>
         <div class="testimonial">
-          <img src="/placeholder.svg?height=100&width=100" alt="Legolas, Elf Hunter">
-          <h3>Legolas</h3>
-          <p>Elf Hunter</p>
-          <p>"Joining this kinship has elevated my LOTRO experience. The organized events and skilled players have
-            helped me become a better hunter."</p>
+          <img
+            src="https://cdn.discordapp.com/attachments/1287709506729672704/1289081971007557683/Untitled_design_6.png?ex=66f786a3&is=66f63523&hm=637ec393cac742b4db6e8a291c3c7dba8a77bcddec09242a5528dd6794cf8239&"
+            alt="Celossia, Leader" loading="lazy">
+          <h3>Celossia</h3>
+          <p>Leader</p>
+          <p>"I’ve really enjoyed meaningful interactions with fellow kin members, whether conversations, meet-ups or
+            instances! Fellow knights have also been so generous in offering help and advice!"</p>
         </div>
         <div class="testimonial">
-          <img src="/placeholder.svg?height=100&width=100" alt="Gimli, Dwarf Champion">
+          <img src="/placeholder.svg?height=100&width=100" alt="Gimli, Dwarf Champion" loading="lazy">
           <h3>Gimli</h3>
           <p>Dwarf Champion</p>
           <p>"I've never met a more dedicated group of adventurers. Whether it's raiding or crafting, there's always
@@ -117,7 +126,7 @@
       <h2>Frequently Asked Questions</h2>
       <div class="faq">
         <div class="faq-item">
-          <div class="faq-question">
+          <div class="faq-question" aria-expanded="false">
             What are the requirements to join the Knights of Iluvatar? <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
@@ -126,7 +135,7 @@
           </div>
         </div>
         <div class="faq-item">
-          <div class="faq-question">
+          <div class="faq-question" aria-expanded="false">
             How often does the kinship organize events? <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
@@ -135,7 +144,7 @@
           </div>
         </div>
         <div class="faq-item">
-          <div class="faq-question">
+          <div class="faq-question" aria-expanded="false">
             Is there a required time commitment? <i class="fas fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
@@ -153,10 +162,11 @@
       <form id="join-form">
         <input type="text" id="character-name" placeholder="Character Name" required>
         <input type="text" id="class" placeholder="Character Class" required>
-        <input type="text" id="level" placeholder="Character Level" required>
+        <input type="number" id="level" placeholder="Character Level" required min="1" max="140">
         <textarea id="message" placeholder="Tell us why you'd like to join our kinship" required></textarea>
         <button type="submit" class="cta-button">Submit Application</button>
       </form>
+      <div id="form-status" class="hidden"></div>
     </section>
   </main>
 
@@ -164,9 +174,9 @@
     <p>&copy; 2023 The Knights of Iluvatar. All rights reserved. | Not affiliated with Standing Stone Games or
       Middle-earth Enterprises</p>
     <div class="social-links">
-      <a href="#" aria-label="Discord"><i class="fab fa-discord"></i></a>
-      <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Join us on Discord"><i class="fab fa-discord"></i></a>
+      <a href="#" aria-label="Follow us on Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="#" aria-label="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
     </div>
   </footer>
 
@@ -177,6 +187,13 @@
   <button class="scroll-to-top" aria-label="Scroll to top">
     <i class="fas fa-arrow-up"></i>
   </button>
+
+  <div id="lightbox" class="lightbox">
+    <span class="close-lightbox">&times;</span>
+    <img class="lightbox-content" id="lightbox-img" alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+
   <script src="scripts.js"></script>
 </body>
 
