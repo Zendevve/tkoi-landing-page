@@ -40,7 +40,7 @@ html {
 }
 
 header {
-  background-image: url('/placeholder.svg?height=1080&width=1920');
+  background-image: url('https://cdn.discordapp.com/attachments/1287709506729672704/1287720352247447592/ScreenShot_2020-11-13_011343_0.jpg?ex=66f72fc8&is=66f5de48&hm=4983c597082ed931135ea0de0fc4cb8ddbd2543cb15411082b8709aa30f1f3af&');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -96,10 +96,14 @@ nav {
   color: var(--text-color);
   text-decoration: none;
   transition: color 0.3s ease;
+  padding: 0.5rem 1rem;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-links a:focus {
   color: var(--primary-color);
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }
 
 .mobile-menu-btn {
@@ -182,6 +186,19 @@ h2 {
   padding: 1.5rem;
   border-radius: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .feature:hover {
@@ -195,21 +212,94 @@ h2 {
   color: var(--primary-color);
 }
 
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
+.gallery-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
-.gallery img {
+.gallery-carousel {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.gallery-carousel img {
   width: 100%;
   height: auto;
-  border-radius: 5px;
-  transition: transform 0.3s ease;
+  object-fit: cover;
+  cursor: pointer;
 }
 
-.gallery img:hover {
-  transform: scale(1.05);
+.gallery-prev,
+.gallery-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.gallery-prev {
+  left: 10px;
+}
+
+.gallery-next {
+  right: 10px;
+}
+
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.lightbox-content {
+  display: block;
+  margin: auto;
+  max-width: 90%;
+  max-height: 90%;
+  animation: zoom 0.6s;
+}
+
+.close-lightbox {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.lightbox-caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0)
+  }
+
+  to {
+    transform: scale(1)
+  }
 }
 
 #join-form {
@@ -232,6 +322,27 @@ h2 {
 
 #join-form button {
   justify-self: center;
+}
+
+#form-status {
+  text-align: center;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+#form-status.success {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#form-status.error {
+  background-color: #f44336;
+  color: white;
+}
+
+.hidden {
+  display: none;
 }
 
 .testimonials {
@@ -294,7 +405,13 @@ h2 {
 }
 
 .faq-answer {
-  display: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-answer.active {
+  max-height: 500px;
   padding: 1rem;
 }
 
@@ -360,6 +477,34 @@ footer {
   transform: scale(1.1);
 }
 
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--primary-color);
+  color: var(--background-color);
+  padding: 8px;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+.cta-button:focus,
+.theme-toggle:focus,
+.scroll-to-top:focus,
+.faq-question:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.light-mode #join-form input,
+.light-mode #join-form textarea {
+  background-color: var(--highlight-color);
+  color: var(--text-color);
+}
+
 @media (max-width: 768px) {
   body {
     font-size: 14px;
@@ -383,10 +528,21 @@ footer {
     flex-direction: column;
     width: 100%;
     margin-top: 1rem;
+    background-color: var(--background-color);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 1rem;
   }
 
   .nav-links.active {
     display: flex;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0.5rem 0;
   }
 
   .mobile-menu-btn {
@@ -397,7 +553,7 @@ footer {
   }
 
   .feature {
-    flex-basis: 100%;
+    flex-basis: calc(50% - 1rem);
   }
 
   .testimonials {
@@ -426,5 +582,13 @@ footer {
     width: 2.5rem;
     height: 2.5rem;
     font-size: 1rem;
+  }
+
+  .feature {
+    flex-basis: 100%;
+  }
+
+  .gallery {
+    grid-template-columns: 1fr;
   }
 }
