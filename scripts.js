@@ -1,270 +1,194 @@
-// Mobile menu toggle
-const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-const navLinks = document.querySelector('.nav-links');
+// Particle background
+const particleBackground = document.getElementById('particle-background');
+const particleCount = 100;
 
-mobileMenuBtn.addEventListener('click', () => {
-  const expanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true' || false;
-  mobileMenuBtn.setAttribute('aria-expanded', !expanded);
-  navLinks.classList.toggle('active');
+for (let i = 0; i < particleCount; i++) {
+  const particle = document.createElement('div');
+  particle.classList.add('particle');
+  particle.style.left = `${Math.random() * 100}%`;
+  particle.style.top = `${Math.random() * 100}%`;
+  particle.style.animationDuration = `${Math.random() * 3 + 2}s`;
+  particle.style.animationDelay = `${Math.random() * 2}s`;
+  particleBackground.appendChild(particle);
+}
+
+// Custom cursor
+const cursor = document.querySelector('.cursor');
+
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
 });
 
-// Smooth scrolling for navigation
+document.addEventListener('mousedown', () => {
+  cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+});
+
+document.addEventListener('mouseup', () => {
+  cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+});
+
+// Mobile menu toggle
+const menuToggle = document.getElementById('menu-toggle');
+const navMenu = document.getElementById('nav-menu');
+
+menuToggle.addEventListener('click', () => {
+  navMenu.classList.toggle('show');
+});
+
+// Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
-    navLinks.classList.remove('active');
-    mobileMenuBtn.setAttribute('aria-expanded', 'false');
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth'
-      });
-      // Set focus to the target element for accessibility
-      target.setAttribute('tabindex', '-1');
-      target.focus();
+
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+
+    // Close mobile menu after clicking a link
+    if (navMenu.classList.contains('show')) {
+      navMenu.classList.remove('show');
     }
   });
 });
 
-// Form submission handler with validation
-const joinForm = document.getElementById('join-form');
-const formStatus = document.getElementById('form-status');
+// Dynamic header background on scroll
+const header = document.querySelector('header');
+const heroSection = document.getElementById('hero');
 
-joinForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-  const characterName = document.getElementById('character-name').value.trim();
-  const characterClass = document.getElementById('class').value.trim();
-  const characterLevel = document.getElementById('level').value;
-  const message = document.getElementById('message').value.trim();
-
-  if (!characterName || !characterClass || !characterLevel || !message) {
-    showFormStatus('Please fill out all fields.', 'error');
-    return;
+window.addEventListener('scroll', () => {
+  if (window.scrollY > heroSection.offsetHeight - header.offsetHeight) {
+    header.style.backgroundColor = 'rgba(10, 10, 10, 0.95)';
+  } else {
+    header.style.backgroundColor = 'rgba(10, 10, 10, 0.8)';
   }
-
-  if (characterLevel < 1 || characterLevel > 140) {
-    showFormStatus('Character level must be between 1 and 140.', 'error');
-    return;
-  }
-
-  // Show loading indicator
-  showFormStatus('Submitting application...', 'info');
-
-  // Simulate form submission (replace with actual API call in production)
-  setTimeout(() => {
-    // In a real application, you would send this data to a server
-    console.log('Form submitted:', { characterName, characterClass, characterLevel, message });
-
-    // Show a success message
-    showFormStatus(`Thank you for your interest in joining The Knights of Iluvatar, ${characterName}! An officer will contact you in-game soon.`, 'success');
-    this.reset();
-  }, 1500);
-});
-
-function showFormStatus(message, type) {
-  formStatus.textContent = message;
-  formStatus.className = type;
-  formStatus.classList.remove('hidden');
-}
-
-// Add parallax effect to the header
-window.addEventListener('scroll', function () {
-  const header = document.querySelector('header');
-  const scrollPosition = window.pageYOffset;
-  header.style.backgroundPositionY = scrollPosition * 0.5 + 'px';
 });
 
 // Intersection Observer for fade-in effect
-const observer = new IntersectionObserver((entries) => {
+const fadeInObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
+      entry.target.classList.add('fade-in-up');
+      fadeInObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('section').forEach(section => {
-  observer.observe(section);
+}, {
+  threshold: 0.1
 });
 
-// FAQ accordion
-document.querySelectorAll('.faq-question').forEach(question => {
-  question.addEventListener('click', () => {
-    const answer = question.nextElementSibling;
-    const icon = question.querySelector('i');
-    const expanded = question.getAttribute('aria-expanded') === 'true' || false;
-    question.setAttribute('aria-expanded', !expanded);
-    answer.classList.toggle('active');
-    icon.classList.toggle('fa-chevron-down');
-    icon.classList.toggle('fa-chevron-up');
-  });
+document.querySelectorAll('section > *').forEach(element => {
+  fadeInObserver.observe(element);
 });
 
-// Theme toggle
-const themeToggle = document.querySelector('.theme-toggle');
-const body = document.body;
-const icon = themeToggle.querySelector('i');
-
-themeToggle.addEventListener('click', () => {
-  body.classList.toggle('light-mode');
-  icon.classList.toggle('fa-moon');
-  icon.classList.toggle('fa-sun');
-  localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light' : 'dark');
-});
-
-// Check for saved theme preference
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'light') {
-  body.classList.add('light-mode');
-  icon.classList.remove('fa-moon');
-  icon.classList.add('fa-sun');
-}
-
-// Scroll to top button
-const scrollToTopBtn = document.querySelector('.scroll-to-top');
+// Parallax effect for sections
+const parallaxSections = document.querySelectorAll('section');
 
 window.addEventListener('scroll', () => {
-  if (window.pageYOffset > 300) {
-    scrollToTopBtn.classList.add('visible');
-  } else {
-    scrollToTopBtn.classList.remove('visible');
-  }
-});
+  const scrollPosition = window.pageYOffset;
 
-scrollToTopBtn.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
+  parallaxSections.forEach((section, index) => {
+    const speed = index % 2 === 0 ? 0.5 : -0.5;
+    section.style.backgroundPositionY = `${scrollPosition * speed}px`;
   });
 });
 
-// Gallery carousel functionality
-const galleryCarousel = document.querySelector('.gallery-carousel');
-const galleryImages = galleryCarousel.querySelectorAll('img');
-const prevBtn = document.querySelector('.gallery-prev');
-const nextBtn = document.querySelector('.gallery-next');
-let currentIndex = 0;
+// Image modal for gallery
+const galleryImages = document.querySelectorAll('.gallery-image');
+const body = document.body;
 
-function showImage(index) {
-  galleryCarousel.style.transform = `translateX(-${index * 100}%)`;
-}
+galleryImages.forEach(image => {
+  image.addEventListener('click', () => {
+    const modal = document.createElement('div');
+    modal.classList.add('image-modal');
 
-prevBtn.addEventListener('click', () => {
-  currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-  showImage(currentIndex);
-});
+    const modalImage = document.createElement('img');
+    modalImage.src = image.src;
+    modalImage.alt = image.alt;
 
-nextBtn.addEventListener('click', () => {
-  currentIndex = (currentIndex + 1) % galleryImages.length;
-  showImage(currentIndex);
-});
+    const caption = document.createElement('p');
+    caption.textContent = image.alt;
+    caption.classList.add('modal-caption');
 
-// Touch swipe functionality for gallery
-let touchStartX = 0;
-let touchEndX = 0;
+    modal.appendChild(modalImage);
+    modal.appendChild(caption);
+    body.appendChild(modal);
 
-galleryCarousel.addEventListener('touchstart', (e) => {
-  touchStartX = e.changedTouches[0].screenX;
-});
+    setTimeout(() => {
+      modal.classList.add('show');
+    }, 50);
 
-galleryCarousel.addEventListener('touchend', (e) => {
-  touchEndX = e.changedTouches[0].screenX;
-  handleSwipe();
-});
-
-function handleSwipe() {
-  if (touchStartX - touchEndX > 50) {
-    // Swipe left
-    nextBtn.click();
-  } else if (touchEndX - touchStartX > 50) {
-    // Swipe right
-    prevBtn.click();
-  }
-}
-
-// Lightbox functionality
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
-const lightboxCaption = document.querySelector('.lightbox-caption');
-const closeLightbox = document.querySelector('.close-lightbox');
-
-galleryImages.forEach((img, index) => {
-  img.addEventListener('click', () => {
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt;
-    lightboxCaption.textContent = img.alt;
-    lightbox.style.display = 'block';
-    currentIndex = index;
-  });
-});
-
-closeLightbox.addEventListener('click', () => {
-  lightbox.style.display = 'none';
-});
-
-lightbox.addEventListener('click', (e) => {
-  if (e.target === lightbox) {
-    lightbox.style.display = 'none';
-  }
-});
-
-// Keyboard navigation for lightbox
-document.addEventListener('keydown', (e) => {
-  if (lightbox.style.display === 'block') {
-    if (e.key === 'ArrowLeft') {
-      currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-      updateLightboxImage();
-    } else if (e.key === 'ArrowRight') {
-      currentIndex = (currentIndex + 1) % galleryImages.length;
-      updateLightboxImage();
-    } else if (e.key === 'Escape') {
-      lightbox.style.display = 'none';
-    }
-  }
-});
-
-function updateLightboxImage() {
-  const img = galleryImages[currentIndex];
-  lightboxImg.src = img.src;
-  lightboxImg.alt = img.alt;
-  lightboxCaption.textContent = img.alt;
-}
-
-// Lazy loading for images
-if ('IntersectionObserver' in window) {
-  const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const img = entry.target;
-        img.src = img.dataset.src;
-        img.removeAttribute('data-src');
-        imageObserver.unobserve(img);
-      }
+    modal.addEventListener('click', () => {
+      modal.classList.remove('show');
+      setTimeout(() => {
+        body.removeChild(modal);
+      }, 300);
     });
   });
+});
 
-  document.querySelectorAll('img[data-src]').forEach(img => {
-    imageObserver.observe(img);
+// Elvish text hover effect
+const elvishPhrases = [
+  "Elen síla lúmenn' omentielvo",
+  "Aiya Eärendil Elenion Ancalima",
+  "Namárië",
+  "Mellon",
+  "A Elbereth Gilthoniel"
+];
+
+const heroContent = document.querySelector('.hero-content');
+
+heroContent.addEventListener('mousemove', (e) => {
+  const elvishText = document.createElement('span');
+  elvishText.textContent = elvishPhrases[Math.floor(Math.random() * elvishPhrases.length)];
+  elvishText.classList.add('elvish-text');
+  elvishText.style.left = `${e.clientX}px`;
+  elvishText.style.top = `${e.clientY}px`;
+  heroContent.appendChild(elvishText);
+
+  setTimeout(() => {
+    elvishText.remove();
+  }, 2000);
+});
+
+// Glowing effect for section titles
+const sectionTitles = document.querySelectorAll('.section-title');
+
+sectionTitles.forEach(title => {
+  title.addEventListener('mouseover', () => {
+    title.style.textShadow = '0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.3)';
   });
-} else {
-  // Fallback for browsers that don't support IntersectionObserver
-  document.querySelectorAll('img[data-src]').forEach(img => {
-    img.src = img.dataset.src;
-    img.removeAttribute('data-src');
+
+  title.addEventListener('mouseout', () => {
+    title.style.textShadow = '0 0 10px rgba(255, 215, 0, 0.3)';
   });
+});
+
+// Interactive member cards
+const memberCards = document.querySelectorAll('.member-card');
+
+memberCards.forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    card.style.transform = 'translateY(-10px) scale(1.05) rotateY(10deg)';
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'translateY(0) scale(1) rotateY(0)';
+  });
+});
+
+// Responsive video sizing
+function resizeVideo() {
+  const video = document.getElementById('hero-video');
+  const heroSection = document.getElementById('hero');
+
+  if (window.innerWidth / window.innerHeight > 16 / 9) {
+    video.style.width = '100%';
+    video.style.height = 'auto';
+  } else {
+    video.style.width = 'auto';
+    video.style.height = '100%';
+  }
 }
 
-// Add animation to features on scroll
-const features = document.querySelectorAll('.feature');
-const featureObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.animation = 'fadeIn 0.5s ease-out forwards';
-      featureObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1 });
-
-features.forEach(feature => {
-  featureObserver.observe(feature);
-});
+window.addEventListener('resize', resizeVideo);
+resizeVideo();
